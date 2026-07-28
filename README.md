@@ -6,44 +6,44 @@ This is an initial step toward reclaiming the privacy that should never have bee
 
 Supported Package Managers
 
-Git
+Git - 
 git clone - clones repositories with depth, branch, and tag support.
 
-NPM
+NPM - 
 npm install - packs tarballs via npm pack without installing.
 
-Pip
+Pip - 
 pip install - downloads wheels/sdists via pip download.
 
-Cargo
+Cargo - 
 cargo install - downloads crate source tarballs from crates.io.
 
-Winget
+Winget - 
 winget install - downloads .msix/.exe/.msi via winget export/installer.
 
-Chocolatey
+Chocolatey - 
 choco install - downloads .nupkg packages for offline install.
 
-Go
+Go - 
 go install - downloads module source via go mod download.
 
-Gem
+Gem - 
 gem install - fetches .gem files via gem fetch.
 
-Docker
+Docker - 
 docker pull - pulls and saves images as .tar for offline loading.
 
-Composer
+Composer - 
 composer require - downloads PHP packages via Composer.
 
-APT
+APT - 
 apt download - fetches .deb packages without installing.
 
-DNF
+DNF - 
 dnf download - fetches .rpm packages without installing.
 
-WSL
+WSL - 
 wsl --install - downloads WSL MSI and distro packages (.appxbundle).
 
-Direct URL
+Direct URL - 
 https://... - downloads any file by URL, auto-detects install scripts.
