@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packeter v1 - Description</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface2: #21262d;
+            --border: #30363d;
+            --text: #e6edf3;
+            --dim: #8b949e;
+            --primary: #58a6ff;
+            --success: #3fb950;
+            --error: #f85149;
+            --warning: #d29922;
+            --accent: #bc8cff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 2.4em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .version {
+            color: var(--dim);
+            font-size: 1.1em;
+        }
+
+        .header .tagline {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .meta {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .meta span {
+            color: var(--dim);
+            font-size: 0.9em;
+        }
+
+        .meta strong {
+            color: var(--text);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin: 40px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.15em;
+            margin: 24px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h4 {
+            color: var(--success);
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .feature-card p {
+            color: var(--dim);
+            margin-bottom: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        @media (max-width: 700px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .grid .feature-card {
+            margin-bottom: 0;
+        }
+
+        ul, ol {
+            margin: 8px 0 16px 24px;
+            color: var(--text);
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        code {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+
+        pre {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.88em;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.82em;
+            color: var(--dim);
+            margin: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--surface);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: var(--surface);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .badge-yes {
+            background: #14532d;
+            color: var(--success);
+        }
+
+        .badge-no {
+            background: #450a0a;
+            color: var(--error);
+        }
+
+        .badge-partial {
+            background: #422006;
+            color: var(--warning);
+        }
+
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--dim);
+            font-size: 0.85em;
+        }
+
+        .section-intro {
+            color: var(--dim);
+            font-size: 1.02em;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: var(--success);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Packeter</h1>
+            <div class="version">v1</div>
+            <div class="tagline">Offline Package Downloader &amp; Installer</div>
+            <div class="meta">
+                <span><strong>Author:</strong> A.O</span>
+                <span><strong>Date:</strong> 25 July 2026</span>
+                <span><strong>License:</strong> MIT</span>
+            </div>
+        </div>
+
+        <h2>Overview</h2>
+        <p>
+            Modern software distribution is built on a Faustian bargain: every time you install a
+            package, every <code>pip install</code>, every <code>npm install</code>, every
+            <code>git clone</code> &mdash; you are opening a channel. Your IP, your machine
+            fingerprint, your dependency graph, your development environment &mdash; all of it is
+            logged, tracked, and profiled by centralized registries and package mirrors. The
+            ecosystem has been engineered so that connecting is not optional. The convenience
+            model is the surveillance model.
+        </p>
+        <p>
+            This is not paranoia. It is architecture.
+        </p>
+        <p>
+            <strong>Packeter</strong> is a cross-platform tool that downloads packages and
+            dependencies via 14 package managers and generates install scripts for offline machines
+            &mdash; without requiring you to reveal your hand to every registry in the chain. It
+            provides a clean Tkinter GUI, auto-analyzes install scripts to resolve deep
+            dependencies, and rewrites scripts to use local files instead of remote downloads.
+        </p>
+        <p>
+            The principle is simple: <strong>acquire what you need, offline, on your own terms</strong>.
+            Download once, from a source you choose, on a connection you control. Then disconnect.
+            The install script runs locally. No phone home. No telemetry. No dependency on
+            services that do not serve you.
+        </p>
+        <p>
+            This is an initial step toward reclaiming the privacy that should never have been
+            surrendered. Software freedom begins with the freedom to acquire software freely.
+            Do no harm. Take no shit. Use responsibly.
+        </p>
+
+        <h2>Supported Package Managers</h2>
+        <div class="grid">
+            <div class="feature-card">
+                <h4>Git</h4>
+                <p><code>git clone</code> &mdash; clones repositories with depth, branch, and tag support.</p>
+            </div>
+            <div class="feature-card">
+                <h4>NPM</h4>
+                <p><code>npm install</code> &mdash; packs tarballs via <code>npm pack</code> without installing.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Pip</h4>
+                <p><code>pip install</code> &mdash; downloads wheels/sdists via <code>pip download</code>.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Cargo</h4>
+                <p><code>cargo install</code> &mdash; downloads crate source tarballs from crates.io.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Winget</h4>
+                <p><code>winget install</code> &mdash; downloads .msix/.exe/.msi via winget export/installer.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Chocolatey</h4>
+                <p><code>choco install</code> &mdash; downloads .nupkg packages for offline install.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Go</h4>
+                <p><code>go install</code> &mdash; downloads module source via <code>go mod download</code>.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Gem</h4>
+                <p><code>gem install</code> &mdash; fetches .gem files via <code>gem fetch</code>.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Docker</h4>
+                <p><code>docker pull</code> &mdash; pulls and saves images as .tar for offline loading.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Composer</h4>
+                <p><code>composer require</code> &mdash; downloads PHP packages via Composer.</p>
+            </div>
+            <div class="feature-card">
+                <h4>APT</h4>
+                <p><code>apt download</code> &mdash; fetches .deb packages without installing.</p>
+            </div>
+            <div class="feature-card">
+                <h4>DNF</h4>
+                <p><code>dnf download</code> &mdash; fetches .rpm packages without installing.</p>
+            </div>
+            <div class="feature-card">
+                <h4>WSL</h4>
+                <p><code>wsl --install</code> &mdash; downloads WSL MSI and distro packages (.appxbundle).</p>
+            </div>
+            <div class="feature-card">
+                <h4>Direct URL</h4>
+                <p><code>https://...</code> &mdash; downloads any file by URL, auto-detects install scripts.</p>
+            </div>
+        </div>
+
+        <h2>Core Features</h2>
+
+        <h3>1. Smart Command Parsing</h3>
+        <p>
+            Paste any install command or URL into the source field. Packeter automatically identifies
+            the package manager, extracts package names, flags, and versions. It supports complex
+            commands including:
+        </p>
+        <ul>
+            <li><code>git clone --depth 1 --branch v2.0 https://...</code></li>
+            <li><code>pip install flask gunicorn --no-cache-dir</code></li>
+            <li><code>winget install --id Git.Git -e --source winget</code></li>
+            <li><code>wsl --install -d ubuntu</code></li>
+            <li><code>curl https://example.com/install.sh | sh</code> (pipe install detection)</li>
+        </ul>
+
+        <h3>2. Pipe Install Detection</h3>
+        <p>
+            When a <code>curl URL | sh</code> or <code>wget -qO- URL | bash</code> pattern is
+            detected, Packeter downloads the script first, then analyzes it for embedded downloads,
+            and resolves those too. This handles most single-command install patterns used by
+            project maintainers.
+        </p>
+
+        <h3>3. Script Analysis Engine</h3>
+        <p>
+            The analyzer parses shell scripts to extract download information at multiple levels:
+        </p>
+        <ul>
+            <li><strong>Direct URLs</strong> &mdash; <code>curl -O URL</code>, <code>wget URL</code></li>
+            <li><strong>Variable assignments</strong> &mdash; <code>VERSION="1.0"</code>, <code>URL="https://..."</code></li>
+            <li><strong>Function definitions</strong> &mdash; traces functions containing download calls</li>
+            <li><strong>Function call tracing</strong> &mdash; follows calls like <code>download_and_extract "$URL"</code></li>
+            <li><strong>Template variable resolution</strong> &mdash; resolves <code>${ARCH}</code>, <code>${url_base}</code>, <code>$1</code>, <code>$2</code> etc.</li>
+            <li><strong>Multi-stage analysis</strong> &mdash; recursively analyzes downloaded scripts up to depth 3</li>
+        </ul>
+
+        <h3>4. Script Rewriting</h3>
+        <p>
+            After analysis, Packeter rewrites install scripts to replace remote downloads with
+            local file operations:
+        </p>
+        <ul>
+            <li><code>curl URL -o file</code> &rarr; <code>cp "$_PACKETER_DIR/local" "file"</code></li>
+            <li><code>wget -O file URL</code> &rarr; <code>cp "$_PACKETER_DIR/local" "file"</code></li>
+            <li><code>pip install pkg</code> &rarr; <code>pip install --no-index --find-links=... pkg</code></li>
+            <li><code>npm install pkg</code> &rarr; <code>npm install ./downloads/pkg.tgz</code></li>
+            <li><strong>Function overrides</strong> &mdash; generates replacement <code>download_and_extract()</code>
+                that checks local files first, extracts with <code>zstd</code>/<code>tar</code>/<code>unzip</code>,
+                and falls back to original curl</li>
+        </ul>
+
+        <h3>5. Install Script Generation</h3>
+        <p>
+            Generates ready-to-run install scripts in two formats:
+        </p>
+        <ul>
+            <li><strong>.sh</strong> &mdash; Bash scripts for Linux/macOS (with error handling, <code>set -e</code>, colored output)</li>
+            <li><strong>.bat</strong> &mdash; Windows Batch scripts (with <code>@echo off</code>, error codes)</li>
+        </ul>
+        <p>
+            Each script includes: file copy commands, extraction commands (auto-detected:
+            <code>.tar.zst</code>, <code>.tar.gz</code>, <code>.zip</code>, <code>.tar.xz</code>,
+            <code>.deb</code>, <code>.rpm</code>), and tool-specific install hints.
+        </p>
+
+        <h3>6. WSL Offline Support</h3>
+        <p>
+            Downloads WSL components for offline installation on Windows machines:
+        </p>
+        <ul>
+            <li><strong>WSL MSI</strong> &mdash; fetches latest release from GitHub API (<code>wsl.2.x.x.x64.msi</code>)</li>
+            <li><strong>Distro packages</strong> &mdash; downloads .appxbundle/.appx/.wsl for Ubuntu, Debian, Kali, openSUSE, SLES, Oracle Linux</li>
+            <li><strong>Install hints</strong> &mdash; generates PowerShell <code>Add-AppxPackage</code> commands</li>
+        </ul>
+
+        <h3>7. Logging System</h3>
+        <p>
+            Two log files are maintained in the output directory:
+        </p>
+        <table>
+            <thead>
+                <tr><th>File</th><th>Content</th><th>Format</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>Query.log</code></td>
+                    <td>Every command/URL submitted by the user</td>
+                    <td><code>YYYY-MM-DD HH:MM:SS - source command</code></td>
+                </tr>
+                <tr>
+                    <td><code>Log.log</code></td>
+                    <td>Every successful file download</td>
+                    <td><code>URL - FileName - FileSize - Path - Date</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>8. Cross-Platform GUI</h3>
+        <p>
+            Built with Python's Tkinter (zero external dependencies). Features:
+        </p>
+        <ul>
+            <li>Dark theme with modern card-based layout</li>
+            <li>Real-time download status with colored log output</li>
+            <li>Scrollable job cards with per-download progress</li>
+            <li>Output folder selector with Browse dialog</li>
+            <li>Format selector (.sh / .bat) for install scripts</li>
+            <li>Supported tool tags for quick reference</li>
+            <li>Quit button for clean application exit</li>
+        </ul>
+
+        <h2>Architecture</h2>
+        <table>
+            <thead>
+                <tr><th>Module</th><th>Responsibility</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>gui.py</code></td><td>Tkinter GUI, event loop, log file writing</td></tr>
+                <tr><td><code>downloader.py</code></td><td>Job management, threading, handler dispatch</td></tr>
+                <tr><td><code>parsers.py</code></td><td>14 parser patterns for all supported tools</td></tr>
+                <tr><td><code>handlers/*.py</code></td><td>Per-tool download logic (14 handlers)</td></tr>
+                <tr><td><code>analyzer.py</code></td><td>Shell script analysis, URL extraction, function tracing</td></tr>
+                <tr><td><code>rewriter.py</code></td><td>Script rewriting, function override injection</td></tr>
+                <tr><td><code>resolver.py</code></td><td>Orchestrates multi-stage download + analysis + rewrite</td></tr>
+                <tr><td><code>scriptgen.py</code></td><td>Generates .sh / .bat install scripts</td></tr>
+                <tr><td><code>logger.py</code></td><td>Query.log and Log.log writing</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Key Technical Details</h2>
+        <div class="feature-card">
+            <h4>Zero Dependencies</h4>
+            <p>Uses only Python standard library (Tkinter, urllib, subprocess, json, re, shutil, threading, dataclasses). No pip install required.</p>
+        </div>
+        <div class="feature-card">
+            <h4>Threaded Downloads</h4>
+            <p>Each download runs in its own daemon thread with queue-based GUI updates. The UI remains responsive during large downloads.</p>
+        </div>
+        <div class="feature-card">
+            <h4>Depth-Limited Resolution</h4>
+            <p>Script analysis recurses up to 3 levels deep to prevent infinite loops from scripts that download scripts that download scripts.</p>
+        </div>
+        <div class="feature-card">
+            <h4>Variable-Aware Analysis</h4>
+            <p>Resolves shell variables across scopes: positional parameters ($1, $2), local assignments, and global constants (ARCH, OS, VERSION) for accurate URL reconstruction.</p>
+        </div>
+
+        <h2>Tested Scenarios</h2>
+        <table>
+            <thead>
+                <tr><th>Source</th><th>Result</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>git clone https://github.com/user/repo</code></td><td><span class="badge badge-yes">Working</span></td></tr>
+                <tr><td><code>npm install express</code></td><td><span class="badge badge-yes">Working</span></td></tr>
+                <tr><td><code>pip install flask</code></td><td><span class="badge badge-yes">Working</span></td></tr>
+                <tr><td><code>cargo install ripgrep</code></td><td><span class="badge badge-yes">Working</span></td></tr>
+                <tr><td><code>curl https://ollama.com/install.sh | sh</code></td><td><span class="badge badge-yes">Working</span> (10 deps resolved)</td></tr>
+                <tr><td><code>curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</code></td><td><span class="badge badge-yes">Working</span></td></tr>
+                <tr><td><code>https://github.com/nvm-sh/nvm/raw/master/install.sh</code></td><td><span class="badge badge-yes">Working</span> (auto-analyzed)</td></tr>
+                <tr><td><code>wsl --install -d ubuntu</code></td><td><span class="badge badge-yes">Working</span></td></tr>
+                <tr><td><code>wsl --update</code></td><td><span class="badge badge-yes">Working</span> (247 MB MSI)</td></tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Packeter v1 &mdash; Author: A.O &mdash; Date: 25 July 2026 &mdash; License: MIT</p>
+        </div>
+    </div>
+</body>
+</html>

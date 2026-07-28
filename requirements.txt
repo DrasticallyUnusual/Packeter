@@ -1,0 +1,5 @@
+python run.py
+
+
+
+# No external dependencies — uses only Python stdlib (tkinter)

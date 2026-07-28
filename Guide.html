@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packeter v1 - Requirements, Installation &amp; Usage Guide</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface2: #21262d;
+            --border: #30363d;
+            --text: #e6edf3;
+            --dim: #8b949e;
+            --primary: #58a6ff;
+            --success: #3fb950;
+            --error: #f85149;
+            --warning: #d29922;
+            --accent: #bc8cff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 2.4em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .subtitle {
+            color: var(--dim);
+            font-size: 1.15em;
+            margin-top: 8px;
+        }
+
+        .meta {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .meta span {
+            color: var(--dim);
+            font-size: 0.9em;
+        }
+
+        .meta strong { color: var(--text); }
+
+        .toc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 28px;
+            margin-bottom: 40px;
+        }
+
+        .toc h2 {
+            color: var(--primary);
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+
+        .toc ol {
+            margin-left: 20px;
+        }
+
+        .toc li {
+            margin-bottom: 6px;
+        }
+
+        .toc a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin: 40px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.15em;
+            margin: 24px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .note {
+            background: #0c2d6b;
+            border: 1px solid var(--primary);
+            border-left: 4px solid var(--primary);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: var(--text);
+        }
+
+        .note strong { color: var(--primary); }
+
+        .warning {
+            background: #422006;
+            border: 1px solid var(--warning);
+            border-left: 4px solid var(--warning);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: var(--text);
+        }
+
+        .warning strong { color: var(--warning); }
+
+        .tip {
+            background: #14532d;
+            border: 1px solid var(--success);
+            border-left: 4px solid var(--success);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: var(--text);
+        }
+
+        .tip strong { color: var(--success); }
+
+        ul, ol {
+            margin: 8px 0 16px 24px;
+            color: var(--text);
+        }
+
+        li { margin-bottom: 6px; }
+
+        code {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+
+        pre {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.88em;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--surface);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        td { color: var(--text); }
+
+        tr:hover td { background: var(--surface); }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            margin: 16px 0;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .tree {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.88em;
+            line-height: 1.6;
+            color: var(--dim);
+            margin: 12px 0;
+        }
+
+        .tree .dir { color: var(--primary); }
+        .tree .file { color: var(--text); }
+
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--dim);
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Packeter v1</h1>
+            <div class="subtitle">Requirements, Installation &amp; Usage Guide</div>
+            <div class="meta">
+                <span><strong>Author:</strong> A.O</span>
+                <span><strong>Date:</strong> 25 July 2026</span>
+                <span><strong>License:</strong> MIT</span>
+            </div>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#requirements">System Requirements</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#usage">Usage Guide</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#logs">Log Files</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ol>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="requirements">1. System Requirements</h2>
+
+        <h3>Python</h3>
+        <table>
+            <thead><tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr></thead>
+            <tbody>
+                <tr><td>Python version</td><td>3.10</td><td>3.11 or newer</td></tr>
+                <tr><td>Tkinter</td><td>Included with Python</td><td>Same</td></tr>
+                <tr><td>External packages</td><td colspan="2"><strong>None</strong> &mdash; uses only the Python standard library</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Operating System</h3>
+        <p>Packeter runs on any OS that supports Python + Tkinter:</p>
+        <ul>
+            <li><strong>Linux</strong> &mdash; any distribution (tested on Arch Linux)</li>
+            <li><strong>macOS</strong> &mdash; native Tkinter support</li>
+            <li><strong>Windows</strong> &mdash; native Tkinter support</li>
+        </ul>
+
+        <h3>Optional System Tools</h3>
+        <p>Depending on which package managers you use, you may need these installed on your system:</p>
+        <table>
+            <thead><tr><th>Tool</th><th>Required For</th><th>Install</th></tr></thead>
+            <tbody>
+                <tr><td><code>git</code></td><td><code>git clone</code> downloads</td><td>Pre-installed on most systems</td></tr>
+                <tr><td><code>npm</code></td><td><code>npm install</code> downloads</td><td>Install Node.js</td></tr>
+                <tr><td><code>pip</code></td><td><code>pip install</code> downloads</td><td>Comes with Python</td></tr>
+                <tr><td><code>cargo</code></td><td><code>cargo install</code> downloads</td><td>Install Rust</td></tr>
+                <tr><td><code>docker</code></td><td><code>docker pull</code> saves</td><td>Install Docker</td></tr>
+                <tr><td><code>apt</code></td><td><code>apt download</code></td><td>Debian/Ubuntu systems</td></tr>
+                <tr><td><code>dnf</code></td><td><code>dnf download</code></td><td>Fedora/RHEL systems</td></tr>
+                <tr><td><code>go</code></td><td><code>go install</code></td><td>Install Go</td></tr>
+                <tr><td><code>gem</code></td><td><code>gem install</code></td><td>Install Ruby</td></tr>
+                <tr><td><code>composer</code></td><td><code>composer require</code></td><td>Install PHP Composer</td></tr>
+            </tbody>
+        </table>
+
+        <div class="note">
+            <strong>Note:</strong> Direct URL downloads (<code>https://...</code>) and WSL downloads
+            require only Python + network access. No additional tools needed.
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="installation">2. Installation</h2>
+
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h4>Clone or Download</h4>
+                <pre><code>git clone https://github.com/user/Packeter.git
+cd Packeter</code></pre>
+                <p>Or download the ZIP from GitHub and extract it.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h4>Verify Python Version</h4>
+                <pre><code>python3 --version</code></pre>
+                <p>Ensure Python 3.10 or newer is installed.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h4>Run Packeter</h4>
+                <pre><code>python3 run.py</code></pre>
+                <p>That's it. No dependencies to install.</p>
+            </div>
+        </div>
+
+        <h3>Project Structure</h3>
+        <div class="tree">
+<span class="dir">Packeter/</span>
+├── <span class="file">run.py</span>                    <span style="color:#8b949e"># Entry point</span>
+├── <span class="file">Description.html</span>           <span style="color:#8b949e"># Tool description &amp; features</span>
+├── <span class="file">Guide.html</span>                 <span style="color:#8b949e"># This guide</span>
+├── <span class="file">LICENSE</span>                    <span style="color:#8b949e"># MIT License</span>
+├── <span class="dir">packeter/</span>
+│   ├── <span class="file">__init__.py</span>
+│   ├── <span class="file">gui.py</span>                  <span style="color:#8b949e"># Tkinter GUI</span>
+│   ├── <span class="file">downloader.py</span>           <span style="color:#8b949e"># Job management &amp; threading</span>
+│   ├── <span class="file">parsers.py</span>              <span style="color:#8b949e"># Command parser (14 tools)</span>
+│   ├── <span class="file">analyzer.py</span>             <span style="color:#8b949e"># Shell script analysis</span>
+│   ├── <span class="file">rewriter.py</span>             <span style="color:#8b949e"># Script rewriting engine</span>
+│   ├── <span class="file">resolver.py</span>             <span style="color:#8b949e"># Multi-stage orchestration</span>
+│   ├── <span class="file">scriptgen.py</span>            <span style="color:#8b949e"># Install script generation</span>
+│   ├── <span class="file">logger.py</span>               <span style="color:#8b949e"># Query.log &amp; Log.log</span>
+│   └── <span class="dir">handlers/</span>
+│       ├── <span class="file">__init__.py</span>
+│       ├── <span class="file">git.py</span>              <span style="color:#8b949e"># git clone</span>
+│       ├── <span class="file">npm.py</span>              <span style="color:#8b949e"># npm install</span>
+│       ├── <span class="file">pip.py</span>              <span style="color:#8b949e"># pip install</span>
+│       ├── <span class="file">cargo.py</span>            <span style="color:#8b949e"># cargo install</span>
+│       ├── <span class="file">url.py</span>              <span style="color:#8b949e"># Direct URL</span>
+│       ├── <span class="file">winget.py</span>           <span style="color:#8b949e"># winget install</span>
+│       ├── <span class="file">choco.py</span>            <span style="color:#8b949e"># choco install</span>
+│       ├── <span class="file">go.py</span>               <span style="color:#8b949e"># go install</span>
+│       ├── <span class="file">gem.py</span>              <span style="color:#8b949e"># gem install</span>
+│       ├── <span class="file">docker.py</span>           <span style="color:#8b949e"># docker pull</span>
+│       ├── <span class="file">composer.py</span>         <span style="color:#8b949e"># composer require</span>
+│       ├── <span class="file">apt.py</span>              <span style="color:#8b949e"># apt download</span>
+│       ├── <span class="file">dnf.py</span>              <span style="color:#8b949e"># dnf download</span>
+│       └── <span class="file">wsl.py</span>              <span style="color:#8b949e"># wsl --install</span>
+└── <span class="dir">output/</span>                     <span style="color:#8b949e"># Downloads &amp; logs</span>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="usage">3. Usage Guide</h2>
+
+        <h3>Launching</h3>
+        <pre><code>python3 run.py</code></pre>
+        <p>The GUI window opens with the Packeter interface.</p>
+
+        <h3>Downloading Packages</h3>
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h4>Enter a Command or URL</h4>
+                <p>Type or paste any supported install command into the <strong>SOURCE</strong> field:</p>
+                <pre><code>git clone https://github.com/user/repo.git
+npm install express
+pip install flask gunicorn
+cargo install ripgrep
+wsl --install -d ubuntu
+https://example.com/install.sh</code></pre>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h4>Set Output Folder (optional)</h4>
+                <p>Change the output directory using the <strong>Browse</strong> button, or use the default <code>output/</code> folder.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h4>Click Download</h4>
+                <p>Press <strong>Download</strong> or hit <strong>Enter</strong>. A job card appears showing real-time progress.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <h4>Generate Install Script</h4>
+                <p>After successful downloads, select <strong>.sh</strong> or <strong>.bat</strong> format and click <strong>Generate Install Script</strong>. A ready-to-run install script is created in the output folder.</p>
+            </div>
+        </div>
+
+        <h3>Format Selection</h3>
+        <ul>
+            <li><strong>.sh (Linux/macOS)</strong> &mdash; generates a Bash script with <code>set -e</code>, colored output, and proper error handling</li>
+            <li><strong>.bat (Windows)</strong> &mdash; generates a Windows Batch script with <code>@echo off</code> and error codes</li>
+        </ul>
+
+        <h3>Supported Command Examples</h3>
+        <table>
+            <thead><tr><th>Category</th><th>Example Command</th></tr></thead>
+            <tbody>
+                <tr><td>Git</td><td><code>git clone https://github.com/user/repo.git</code></td></tr>
+                <tr><td>Git (branch)</td><td><code>git clone --branch v2.0 --depth 1 https://...</code></td></tr>
+                <tr><td>NPM</td><td><code>npm install express</code></td></tr>
+                <tr><td>Pip</td><td><code>pip install flask gunicorn</code></td></tr>
+                <tr><td>Cargo</td><td><code>cargo install ripgrep</code></td></tr>
+                <tr><td>Winget</td><td><code>winget install --id Git.Git -e</code></td></tr>
+                <tr><td>Choco</td><td><code>choco install nodejs -y</code></td></tr>
+                <tr><td>Go</td><td><code>go install github.com/user/repo@latest</code></td></tr>
+                <tr><td>Gem</td><td><code>gem install rails</code></td></tr>
+                <tr><td>Docker</td><td><code>docker pull ubuntu:22.04</code></td></tr>
+                <tr><td>Composer</td><td><code>composer require laravel/framework</code></td></tr>
+                <tr><td>APT</td><td><code>apt download nginx</code></td></tr>
+                <tr><td>DNF</td><td><code>dnf download nginx</code></td></tr>
+                <tr><td>WSL</td><td><code>wsl --install -d ubuntu</code></td></tr>
+                <tr><td>WSL (update)</td><td><code>wsl --update</code></td></tr>
+                <tr><td>URL</td><td><code>https://example.com/install.sh</code></td></tr>
+                <tr><td>Pipe install</td><td><code>curl https://example.com/install.sh | sh</code></td></tr>
+            </tbody>
+        </table>
+
+        <!-- ============================================================ -->
+        <h2 id="examples">4. Practical Examples</h2>
+
+        <h3>Example 1: Download a Python Project</h3>
+        <pre><code># In Packeter source field:
+pip install flask gunicorn requests
+
+# Packeter downloads all wheels to output/downloads/
+# Then generates install.sh or install.bat</code></pre>
+
+        <h3>Example 2: Offline Install Script via URL</h3>
+        <pre><code># In Packeter source field:
+https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh
+
+# Packeter:
+#   1. Downloads the script
+#   2. Analyzes it (finds NVM_GITHUB_REPO, curl commands)
+#   3. Downloads the NVM release tarball
+#   4. Rewrites the script to use local files
+#   5. Generates install.sh</code></pre>
+
+        <h3>Example 3: Ollama Offline Setup</h3>
+        <pre><code># In Packeter source field:
+curl https://ollama.com/install.sh | sh
+
+# Packeter detects pipe pattern, downloads the script,
+# analyzes function calls, resolves 10+ dependencies,
+# and generates a rewritten install script.</code></pre>
+
+        <h3>Example 4: WSL Offline Install</h3>
+        <pre><code># Step 1: Download WSL components
+wsl --install -d ubuntu
+
+# Packeter downloads:
+#   - WSL MSI from GitHub releases (~247 MB)
+#   - Ubuntu .appxbundle (~570 MB)
+
+# Step 2: Generate install script
+# Generates PowerShell commands for the offline machine</code></pre>
+
+        <!-- ============================================================ -->
+        <h2 id="logs">5. Log Files</h2>
+        <p>Packeter maintains two log files in the output directory:</p>
+
+        <h3>Query.log</h3>
+        <p>Records every command or URL you submit:</p>
+        <pre><code>2026-07-25 14:30:15 - git clone https://github.com/user/repo.git
+2026-07-25 14:31:02 - pip install flask
+2026-07-25 14:32:18 - wsl --install -d ubuntu</code></pre>
+
+        <h3>Log.log</h3>
+        <p>Records every successful file download:</p>
+        <pre><code>https://github.com/user/repo/archive/main.tar.gz - repo-main.tar.gz - 2.4 MB - /path/to/output/downloads/repo-main.tar.gz - 2026-07-25 14:30:16
+pip install flask - Flask-3.0.0-py3-none-any.whl - 627.3 KB - /path/to/output/downloads/Flask-3.0.0-py3-none-any.whl - 2026-07-25 14:31:03</code></pre>
+
+        <!-- ============================================================ -->
+        <h2 id="troubleshooting">6. Troubleshooting</h2>
+
+        <h3>Common Issues</h3>
+        <table>
+            <thead><tr><th>Problem</th><th>Cause</th><th>Solution</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td>"pip is not installed"</td>
+                    <td>Pip not in PATH</td>
+                    <td>Install Python with pip, or add it to PATH</td>
+                </tr>
+                <tr>
+                    <td>"npm is not installed"</td>
+                    <td>Node.js not installed</td>
+                    <td>Install Node.js from <code>nodejs.org</code></td>
+                </tr>
+                <tr>
+                    <td>Download fails with timeout</td>
+                    <td>Large file or slow connection</td>
+                    <td>Retry; URL handler has 120s timeout</td>
+                </tr>
+                <tr>
+                    <td>"Unsupported command"</td>
+                    <td>Command pattern not recognized</td>
+                    <td>Use a direct URL instead of the install command</td>
+                </tr>
+                <tr>
+                    <td>WSL distro download is huge</td>
+                    <td>Distro .appxbundle can be 500+ MB</td>
+                    <td>Expected behavior; use a stable connection</td>
+                </tr>
+                <tr>
+                    <td>Script analysis fails</td>
+                    <td>Complex/unusual shell syntax</td>
+                    <td>Downloads still work; install script just won't be rewritten</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Getting Help</h3>
+        <ul>
+            <li>Check the <strong>Download</strong> tab in the GUI for real-time error messages</li>
+            <li>Review <code>Query.log</code> and <code>Log.log</code> in the output folder</li>
+            <li>Report issues at <code>https://github.com/user/Packeter/issues</code></li>
+        </ul>
+
+        <div class="tip">
+            <strong>Tip:</strong> You can run multiple downloads in sequence. Each one appears as a
+            separate job card. When all complete, click "Generate Install Script" to create a
+            combined install script that handles everything.
+        </div>
+
+        <div class="footer">
+            <p>Packeter v1 &mdash; Author: A.O &mdash; Date: 25 July 2026 &mdash; License: MIT</p>
+        </div>
+    </div>
+</body>
+</html>
